@@ -102,4 +102,10 @@ RUN apt-get install -y --no-install-recommends subversion && \
     svn checkout https://github.com/horovod/horovod/trunk/examples && \
     rm -rf /examples/.svn
 
+EXPOSE 22
+EXPOSE 6006
+EXPOSE 443
+EXPOSE 8080
+EXPOSE 80
+
 WORKDIR "/examples"
