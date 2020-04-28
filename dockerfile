@@ -57,7 +57,9 @@ RUN cd /tmp \
     && ./configure --enable-optimizations --with-ssl \
     && make install \
     && ln -sf /usr/local/bin/python3 /usr/bin/python \
-    && ln -sf /usr/local/bin/pip3 /usr/bin/pip
+    && ln -sf /usr/local/bin/pip3 /usr/bin/pip \
+    && rm -rf Python-3.7.6.tgz \
+    && rm -rf Python-3.7.6/
 
 
 # #python3
@@ -72,7 +74,7 @@ RUN cd /tmp \
 #     ln -sf /usr/local/bin/python3 /usr/bin/python
  
 #python3-pip
-RUN pip install --upgrade pip
+RUN pip install --upgrade --no-cache-dir pip
  
 #numpy setup
 RUN pip install --no-cache-dir sklearn scipy pandas numpy
@@ -91,7 +93,7 @@ RUN HOROVOD_WITH_TENSORFLOW=1 \
 RUN apt update && \
     apt-get install -y --no-install-recommends openssh-client openssh-server && \
     mkdir -p /var/run/sshd
- 
+
 # Allow OpenSSH to talk to containers without asking for confirmation
 RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_config.new && \
     echo "    StrictHostKeyChecking no" >> /etc/ssh/ssh_config.new && \
@@ -101,6 +103,12 @@ RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_confi
 RUN apt-get install -y --no-install-recommends subversion && \
     svn checkout https://github.com/horovod/horovod/trunk/examples && \
     rm -rf /examples/.svn
+
+#clean used package
+RUN rm -rf /var/lib/apt/lists/*
+
+# create mount directory
+RUN mkdir -p /mounts
 
 EXPOSE 22
 EXPOSE 6006
