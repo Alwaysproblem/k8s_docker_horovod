@@ -9,7 +9,6 @@ SHELL ["/bin/bash", "-cu"]
 # RUN alias cmd
 RUN echo alias ll='ls -all -h' >> ~/.bashrc
 RUN echo alias cls='printf "\033c"' >> ~/.bashrc
-RUN source ~/.bashrc
 
 # RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
 ENV DEBIAN_FRONTEND=noninteractive
