@@ -6,6 +6,11 @@ ENV PYTHON_VERSION=3.7.6
 ENV TFCPU=1
 SHELL ["/bin/bash", "-cu"]
 
+# RUN alias cmd
+RUN echo alias ll='ls -all -h' >> ~/.bashrc
+RUN echo alias cls='printf "\033c"' >> ~/.bashrc
+RUN source ~/.bashrc
+
 # RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
 ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && apt-get install --assume-yes --no-install-recommends apt-utils
