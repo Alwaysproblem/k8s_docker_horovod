@@ -45,8 +45,8 @@ RUN mkdir /tmp/openmpi && \
 
 #python3.7.6 pls compile with --with-ssl or you can not use pip3
 RUN cd /tmp \
-    && tar -zvxf Python-3.7.6.tgz \
     && wget https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz \
+    && tar -zvxf Python-3.7.6.tgz \
     && cd Python-3.7.6 \
     && ./configure --enable-optimizations --with-ssl \
     && make install \
