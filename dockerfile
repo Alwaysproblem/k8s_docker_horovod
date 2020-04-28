@@ -2,6 +2,8 @@ FROM ubuntu:18.04
 
 # TensorFlow version is tightly coupled to CUDA and cuDNN so it should be selected carefully
 ENV TENSORFLOW_VERSION=2.1.0
+ENV PYTHON_VERSION=3.7.6
+ENV TFCPU=1
 SHELL ["/bin/bash", "-cu"]
 
 # RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends apt-utils
@@ -45,9 +47,9 @@ RUN mkdir /tmp/openmpi && \
 
 #python3.7.6 pls compile with --with-ssl or you can not use pip3
 RUN cd /tmp \
-    && wget https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz \
-    && tar -zvxf Python-3.7.6.tgz \
-    && cd Python-3.7.6 \
+    && wget https://www.python.org/ftp/python/${PYTHON_VERSION}/Python-${PYTHON_VERSION}.tgz \
+    && tar -zvxf Python-${PYTHON_VERSION}.tgz \
+    && cd Python-${PYTHON_VERSION} \
     && ./configure --enable-optimizations --with-ssl \
     && make install \
     && ln -sf /usr/local/bin/python3 /usr/bin/python \
@@ -69,7 +71,13 @@ RUN cd /tmp \
 RUN pip install --upgrade pip
  
 #numpy setup
-RUN pip install --no-cache-dir tensorflow-cpu sklearn scipy pandas numpy
+RUN pip install --no-cache-dir sklearn scipy pandas numpy
+
+RUN if [[ "${TFCPU}" == "1" ]]; then \
+        pip install --no-cache-dir tensorflow-cpu==${TENSORFLOW_VERSION} ;\
+    else \
+        pip install --no-cache-dir tensorflow-gpu==${TENSORFLOW_VERSION} ;\
+    fi
 
 #horovod setup
 RUN HOROVOD_WITH_TENSORFLOW=1 \
