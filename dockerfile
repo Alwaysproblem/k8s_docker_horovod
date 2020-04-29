@@ -100,9 +100,9 @@ RUN cat /etc/ssh/ssh_config | grep -v StrictHostKeyChecking > /etc/ssh/ssh_confi
     mv /etc/ssh/ssh_config.new /etc/ssh/ssh_config
 
 # Download examples
-RUN apt-get install -y --no-install-recommends subversion && \
-    svn checkout https://github.com/horovod/horovod/trunk/examples && \
-    rm -rf /examples/.svn
+RUN cd / && git clone https://github.com/Alwaysproblem/k8s_docker_horovod \
+    && cd k8s_docker_horovod \
+    && rm -rf .git
 
 #clean used package
 RUN rm -rf /var/lib/apt/lists/*
@@ -116,4 +116,4 @@ EXPOSE 443
 EXPOSE 8080
 EXPOSE 80
 
-WORKDIR "/examples"
+WORKDIR "/k8s_docker_horovod"
