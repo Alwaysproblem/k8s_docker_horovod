@@ -60,18 +60,6 @@ RUN cd /tmp \
     && ln -sf /usr/local/bin/pip3 /usr/bin/pip \
     && rm -rf Python-3.7.6.tgz \
     && rm -rf Python-3.7.6/
-
-
-# #python3
-# RUN wget https://www.python.org/ftp/python/3.7.6/Python-3.7.6.tgz
-# RUN tar -zxvf Python-3.7.6.tgz
-# RUN mv Python-3.7.6 /usr/local/
-# RUN cd /usr/local/Python-3.7.6 && \
-#     ./configure && \
-#     make && \
-#     make install &&\
-#     mv /usr/bin/python /usr/bin/python.2 && \
-#     ln -sf /usr/local/bin/python3 /usr/bin/python
  
 #python3-pip
 RUN pip install --upgrade --no-cache-dir pip
