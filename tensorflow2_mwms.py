@@ -35,6 +35,10 @@ def make_datasets_unbatched():
 
 train_datasets = make_datasets_unbatched().batch(BATCH_SIZE).repeat(3)
 
+options = tf.data.Options()
+options.experimental_distribute.auto_shard_policy = tf.data.experimental.AutoShardPolicy.OFF
+train_datasets_no_auto_shard = train_datasets.with_options(options)
+
 #%%
 def build_and_compile_cnn_model():
   model = tf.keras.Sequential([
