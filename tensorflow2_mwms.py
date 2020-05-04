@@ -58,6 +58,6 @@ def build_and_compile_cnn_model():
 with strategy.scope():
     model = build_and_compile_cnn_model()
 
-model.fit(x=train_datasets, epochs=3, steps_per_epoch=5)
+model.fit(x=train_datasets_no_auto_shard, epochs=3, steps_per_epoch=5)
 
 # %%

@@ -1,0 +1,37 @@
+apiVersion: kubeflow.org/v1alpha2
+kind: MPIJob
+metadata:
+  creationTimestamp: "2019-07-09T22:15:51Z"
+  generation: 1
+  name: kubehvd
+  namespace: kube-public
+  resourceVersion: "5645868"
+  selfLink: /apis/kubeflow.org/v1alpha2/namespaces/default/mpijobs/tensorflow-benchmarks
+  uid: 1c5b470f-a297-11e9-964d-88d7f67c6e6d
+spec:
+  cleanPodPolicy: Running
+  mpiReplicaSpecs:
+    Launcher:
+      replicas: 1
+      template:
+        spec:
+          containers:
+          - command:
+            - mpirun
+            - --allow-run-as-root
+            - -np
+            - "2"
+            - python
+            - fashion.py
+            image: alwaysproblem/adalgohvd:latest
+            name: kubehvd
+    Worker:
+      replicas: 1
+      template:
+        spec:
+          containers:
+          - image: alwaysproblem/adalgohvd:latest
+            name: kubehvd
+            resources:
+              limits:
+                cpu: 4
