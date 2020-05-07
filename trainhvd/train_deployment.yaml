@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hvd-trainjob-0
+spec:
+  selector:
+    matchLabels:
+      app: hvd-trainjob-0
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hvd-trainjob-0
+    spec:
+      containers:
+      - name: hvd-trainjob-0
+        image: alwaysproblem/adalgohvd
+        command: ["/bin/bash","-c"]
+        args:
+          - "touch /root/.ssh/fuck.py && echo 'fuck you assHole' >> /root/.ssh/fuck.py && sleep infinity"
+        volumeMounts:
+        - mountPath: "/root/.ssh"
+          name: ssh-vol
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 23445
+      volumes:
+        - name: ssh-vol
+          persistentVolumeClaim:
+              claimName: ssh-share
+      # restartPolicy: OnFailure
+

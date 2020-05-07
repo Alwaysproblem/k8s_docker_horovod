@@ -6,3 +6,4 @@ in the micro:
 set autosave 1
 set colorscheme one-dark
 set paste true
+set softwrap true
