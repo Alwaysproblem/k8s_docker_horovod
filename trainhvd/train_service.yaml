@@ -8,3 +8,4 @@ spec:
   ports:
   - port: 23445
     targetPort: 23445
+    # nodePort: 30007
