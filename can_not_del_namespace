@@ -1,3 +1,6 @@
+# the problem caused by kubeflow installation, using: 
+kubectl delete apiservice v1beta1.webhook.cert-manager.io
+
 NAMESPACE=auth
 #open proxy assume the wanted namespace is auth
 nohup kubectl proxy &
