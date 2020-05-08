@@ -1,9 +1,0 @@
-curl https://getmic.ro | bash
-echo "export PATH=${PATH}:/home/sdev/yongxi" >> ~/yyx
-sudo apt install xclip
-
-in the micro:
-set autosave 1
-set colorscheme one-dark
-set paste true
-set softwrap true
