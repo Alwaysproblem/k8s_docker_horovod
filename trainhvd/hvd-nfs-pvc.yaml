@@ -8,8 +8,8 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 500Mi
-  storageClassName: manual
+      storage: 10Mi
+  storageClassName: nfs
   selector:
     matchLabels:
-      type: local-ssh-2
+      type: nfs-storage

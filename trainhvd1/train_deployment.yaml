@@ -23,8 +23,8 @@ spec:
           name: ssh-vol-3
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "20Gi"
+            cpu: "12"
         ports:
         - containerPort: 23445
       volumes:

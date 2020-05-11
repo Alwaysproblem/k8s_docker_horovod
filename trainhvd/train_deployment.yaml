@@ -18,13 +18,14 @@ spec:
         command: ["/bin/bash","-c"]
         args:
           - "/usr/sbin/sshd -p 23445 && sleep infinity"
+          # - "sleep infinity"
         volumeMounts:
         - mountPath: "/root/.ssh"
           name: ssh-vol-2
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "20Gi"
+            cpu: "12"
         ports:
         - containerPort: 23445
       volumes:
