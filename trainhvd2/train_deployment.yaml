@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hvd-trainjob-2
+spec:
+  selector:
+    matchLabels:
+      app: hvd-trainjob-2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: hvd-trainjob-2
+    spec:
+      containers:
+      - name: hvd-trainjob-2
+        image: alwaysproblem/adalgohvd
+        command: ["/bin/bash","-c"]
+        args:
+          - "/usr/sbin/sshd -p 23445 && sleep infinity"
+        volumeMounts:
+        - mountPath: "/root/.ssh"
+          name: ssh-vol-4
+        resources:
+          limits:
+            memory: "20Gi"
+            cpu: "12"
+        ports:
+        - containerPort: 23445
+      volumes:
+        - name: ssh-vol-4
+          persistentVolumeClaim:
+              claimName: ssh-share-4
+      # restartPolicy: OnFailure
+

@@ -9,7 +9,7 @@ tfds.disable_progress_bar()
 
 os.environ['TF_CONFIG'] = json.dumps({
     'cluster': {
-        'worker': ["172.17.67.60:12345", "172.17.67.59:23456"]
+        'worker': ["172.17.67.60:12345", "172.17.67.59:12345", "172.17.67.61:12345"]
     },
     'task': {'type': 'worker', 'index': 0}
 })
@@ -58,6 +58,6 @@ def build_and_compile_cnn_model():
 with strategy.scope():
     model = build_and_compile_cnn_model()
 
-model.fit(x=train_datasets_no_auto_shard, epochs=3, steps_per_epoch=5)
+model.fit(x=train_datasets_no_auto_shard, epochs=24, steps_per_epoch=5)
 
 # %%
