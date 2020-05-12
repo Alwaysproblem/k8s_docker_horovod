@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: tensorboard-pv
+  labels:
+    type: nfs-storage
+    app: tensorboard
+spec:
+  storageClassName: nfs
+  capacity:
+    storage: 500Mi
+  accessModes:
+    - ReadOnlyMany
+  nfs:
+    server: n-adx-recall-4
+    path: "/data02/training/tensorboard/"

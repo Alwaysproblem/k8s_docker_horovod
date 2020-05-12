@@ -34,6 +34,12 @@ if the user of your ssh public key is `root` make sure the ssh directory is owne
   ssh -L <local-host-port>:<taget-server-ip>:<target-port> <jumper-sever-ip-or-dns> -l <user-name>
   ```
 
+- easiest way for vscoder
+
+  - click conputer icon, press '+', enter 6006 and hit enter
+
+  ![image-forwarding](image/image-ssh-forwarding.png)
+
 ## k8s custom columns output
 
 [reference](https://kubernetes.io/docs/reference/kubectl/overview/#custom-columns)
