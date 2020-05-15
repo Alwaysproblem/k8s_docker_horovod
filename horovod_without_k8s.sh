@@ -5,7 +5,7 @@ horovodrun --start-timeout 600 -np 16 -H n-adx-recall-2:8,n-adx-recall-3:8 -p 23
 
 
 # for k8s cmd
-kubectl exec -it hvd-trainjob-0-69488dbbcc-tnjsx -- bash -c "horovodrun --start-timeout 600 -np 16 -H 10.102.194.37:8,10.97.64.43:8,10.102.129.212:8 -p 23445 python fashion.py"
+kubectl exec -it hvd-trainjob-0-69488dbbcc-tnjsx -- bash -c x
 horovodrun --start-timeout 600 -np 16 -H 10.102.194.37:8,10.97.64.43:8,10.102.129.212:8 -p 23445 python fashion.py
 
 # test local:

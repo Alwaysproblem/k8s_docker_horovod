@@ -1,0 +1,38 @@
+apiVersion: kubeflow.org/v1alpha2
+kind: MPIJob
+metadata:
+  name: tensorflow-mnist
+spec:
+  slotsPerWorker: 1
+  cleanPodPolicy: Running
+  mpiReplicaSpecs:
+    Launcher:
+      replicas: 1
+      template:
+        spec:
+          containers:
+          - image: alwaysproblem/adalgohvd:latest
+            imagePullPolicy: IfNotPresent
+            name: mpi-launcher
+            command:
+            - /bin/bash
+            - -c
+            args:
+            - "mpirun --allow-run-as-root python fashion.py"
+            # - "horovodrun --start-timeout 600 -np 24 python fashion.py"
+            resources:
+              request:
+                cpu: 1
+                memory: 6Gi
+    Worker:
+      replicas: 3
+      template:
+        spec:
+          containers:
+          - image: alwaysproblem/adalgohvd:latest
+            imagePullPolicy: IfNotPresent
+            name: mpi-worker
+            resources:
+              request:
+                cpu: 1
+                memory: 6Gi
