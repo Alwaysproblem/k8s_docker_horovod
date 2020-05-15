@@ -19,6 +19,7 @@ spec:
             - /bin/bash
             - -c
             args:
+            #TODO: find out mpirun
             - "mpirun --allow-run-as-root python fashion.py"
             resources:
               request:
