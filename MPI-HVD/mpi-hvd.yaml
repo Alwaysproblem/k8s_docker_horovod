@@ -3,7 +3,8 @@ kind: MPIJob
 metadata:
   name: tensorflow-mnist
 spec:
-  slotsPerWorker: 1
+  # the number of process on a worker
+  slotsPerWorker: 8
   cleanPodPolicy: Running
   mpiReplicaSpecs:
     Launcher:
@@ -19,20 +20,39 @@ spec:
             - -c
             args:
             - "mpirun --allow-run-as-root python fashion.py"
-            # - "horovodrun --start-timeout 600 -np 24 python fashion.py"
             resources:
               request:
                 cpu: 1
-                memory: 6Gi
+                memory: 3Gi
+              # limits:
+              #   cpu: 2
+              #   memory: 20Gi
     Worker:
       replicas: 3
       template:
         spec:
           containers:
           - image: alwaysproblem/adalgohvd:latest
+            # use local image first.
             imagePullPolicy: IfNotPresent
             name: mpi-worker
             resources:
               request:
                 cpu: 1
-                memory: 6Gi
+                memory: 3Gi
+              # limits:
+              #   cpu: 2
+              #   memory: 20Gi
+          #   volumeMounts:
+          #   - mountPath: /efs
+          #     name: efs
+          #   - mountPath: /models
+          #     name: models
+          # volumes:
+          # - name: efs
+          #   nfs:
+          #     server: fs-ab134502.efs.us-west-2.amazonaws.com
+          #     path: /
+          #     readOnly: true
+          # - name: models
+          #   emptyDir: {}
