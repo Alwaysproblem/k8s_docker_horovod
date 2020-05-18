@@ -1,3 +1,3 @@
-FROM alwaysproblem/adalgo:latest
+FROM alwaysproblem/adalgohvd:latest
 
-COPY MPI-HVD /examples
+COPY ["MPI-HVD", "/examples"]

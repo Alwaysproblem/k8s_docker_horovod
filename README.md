@@ -73,3 +73,8 @@ if the user of your ssh public key is `root` make sure the ssh directory is owne
   NAME           RSRC
   submit-queue   610995
   ```
+
+- build image from alwayproblem/adalgohvd:latest, or you can build env base image on your own.
+  the example image files is presented as dockerfile
+
+- you alse canc choose the horovod-cpu as your base image.

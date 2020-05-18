@@ -30,8 +30,7 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
         nano \
         wget \
         ca-certificates \
-        libjpeg-dev \
-        libpng-dev \
+
         librdmacm1 \
         libibverbs1 \
         ibverbs-providers \
