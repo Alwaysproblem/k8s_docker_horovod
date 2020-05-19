@@ -20,8 +20,7 @@ spec:
             - -c
             args:
             #TODO: find out mpirun
-            # - "mpirun --allow-run-as-root python fashion.py"
-            - "sleep 1d;"
+            - "mpirun --allow-run-as-root python fashion.py"
             resources:
               request:
                 cpu: 1
@@ -45,16 +44,16 @@ spec:
               # limits:
               #   cpu: 2
               #   memory: 20Gi
-            volumeMounts:
-            - mountPath: /data
-              name: dataset
+            # volumeMounts:
+            # - mountPath: /data
+            #   name: dataset
             # - mountPath: /models
             #   name: models
-          volumes:
-          - name: dataset
-            nfs:
-              server: n-adx-recall-4
-              path: /data02
-              readOnly: true
+          # volumes:
+          # - name: dataset
+          #   nfs:
+          #     server: n-adx-recall-4
+          #     path: /data02
+          #     readOnly: true
           # - name: models
           #   emptyDir: {}
