@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: local-host-test-dep
+spec:
+  selector:
+    matchLabels:
+      app: local-host-pod
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: local-host-pod
+    spec:
+      containers:
+      - name: local-host-container
+        image: ubuntu
+        command: ["/bin/bash","-c"]
+        args:
+          - "sleep 1d"
+        volumeMounts:
+        - mountPath: "/data"
+          name: dataset
+        resources:
+          limits:
+            memory: "4Gi"
+            cpu: "4"
+      volumes:
+        - name: dataset
+          persistentVolumeClaim:
+              claimName: local-host-pvc
+      # restartPolicy: OnFailure
+
