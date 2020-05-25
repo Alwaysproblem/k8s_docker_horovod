@@ -1,2 +1,0 @@
-NAME          RSRC           podIP
-metadata.name spec.clusterIP status.podIP
