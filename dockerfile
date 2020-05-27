@@ -30,7 +30,6 @@ RUN apt-get update && apt-get install -y --allow-downgrades --allow-change-held-
         nano \
         wget \
         ca-certificates \
-
         librdmacm1 \
         libibverbs1 \
         ibverbs-providers \
