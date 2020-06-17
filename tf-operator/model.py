@@ -188,8 +188,8 @@ else:
 D_train = D_train_r.with_options(options)
 D_valid = D_valid_r.with_options(options)
 
-D_train = D_train_r.repeat().prefetch(buffer_size=num_para)
-D_valid = D_valid_r.repeat().prefetch(buffer_size=num_para)
+D_train = D_train.repeat().prefetch(buffer_size=num_para)
+D_valid = D_valid.repeat().prefetch(buffer_size=num_para)
 
 
 # %%
