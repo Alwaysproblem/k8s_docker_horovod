@@ -1,0 +1,3 @@
+[submodule "mpi-operator"]
+	path = mpi-operator
+	url = ./mpi-operator/
