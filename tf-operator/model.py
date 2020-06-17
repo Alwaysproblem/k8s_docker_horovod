@@ -27,7 +27,7 @@ os.environ['TF_CONFIG'] = json.dumps({
     },
     'task': {'type': 'worker', 'index': host_index[host]}
 })
-print(os.environ['TF_CONFIG'])
+
 #%%
 strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
 options = tf.data.Options()
