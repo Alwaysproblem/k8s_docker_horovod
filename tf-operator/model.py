@@ -8,8 +8,8 @@ from datetime import datetime
 
 import numpy as np
 import tensorflow as tf
-# from deepctr.inputs import SparseFeat, VarLenSparseFeat, get_feature_names
-# from deepctr.models import DeepFM
+from deepctr.inputs import SparseFeat, VarLenSparseFeat, get_feature_names
+from deepctr.models import DeepFM
 import platform
 
 #%%
