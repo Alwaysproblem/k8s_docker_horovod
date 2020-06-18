@@ -7,7 +7,7 @@ spec:
   tfReplicaSpecs:
     Worker:
       replicas: 6
-      # restartPolicy: onFailure
+      restartPolicy: OnFailure
       template:
         spec:
           containers:
