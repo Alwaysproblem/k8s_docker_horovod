@@ -26,6 +26,11 @@ for gpu in gpus:
 if gpus:
     tf.config.experimental.set_visible_devices(gpus[hvd.local_rank()], 'GPU')
 
+#%%
+options = tf.data.Options()
+options.experimental_distribute.auto_shard_policy = \
+                                    tf.data.experimental.AutoShardPolicy.DATA
+
 # %%
 # sparse = [1, 2, 3, 8, 10, 12, 13, 68, 69, 151, 152, 163, 166, 77]
 # varlen = [65, 66, 67, 71, 72, 73, 74, 75, 76, 158, 159]
@@ -138,7 +143,7 @@ def Decode(file_paths: list, col_type: dict, target: str, batchsize: int,
 
 
 # %%
-batchsize = NNconfig_dic["batchsize"]
+batchsize = NNconfig_dic["batchsize"] * num_workers
 epochs = NNconfig_dic["epochs"]
 buffer_size = NNconfig_dic["buffersize"]
 num_para = tf.data.experimental.AUTOTUNE
@@ -171,22 +176,11 @@ if NNconfig_dic["shuffled"] == True:
 else:
     pass
 
-if gpus:
-    D_train = D_train_r\
-                .shard(num_workers, worker_index)\
-                .repeat()\
-                .apply(
-                    tf.data.experimental\
-                    .prefetch_to_device('/gpu:0', buffer_size=num_para)) 
-    D_valid = D_valid_r\
-                .shard(num_workers, worker_index)\
-                .repeat()\
-                .apply(
-                    tf.data.experimental\
-                    .prefetch_to_device('/gpu:0', buffer_size=num_para))
-else:
-    D_train = D_train_r.shard(num_workers, worker_index).repeat().prefetch(buffer_size=num_para)
-    D_valid = D_valid_r.shard(num_workers, worker_index).repeat().prefetch(buffer_size=num_para)
+D_train = D_train_r.with_options(options)
+D_valid = D_valid_r.with_options(options)
+
+D_train = D_train_r.repeat().prefetch(buffer_size=num_para)
+D_valid = D_valid_r.repeat().prefetch(buffer_size=num_para)
 
 
 # %%
@@ -216,32 +210,6 @@ model = DeepFM(linear_feature_columns, dnn_feature_columns,
                 dnn_use_bn=NNconfig_dic["dnn_use_bn"],
                 dnn_activation=NNconfig_dic["dnn_activation"])
 NNconfig_dic["model_name"] = "DeepFM"
-
-# model = xDeepFM(linear_feature_columns, dnn_feature_columns,
-#                 dnn_hidden_units=NNconfig_dic["dnn_hidden_units"], 
-#                 cin_layer_size=NNconfig_dic["cin_layer_size"],
-#                 l2_reg_dnn=NNconfig_dic["l2_reg_dnn"],
-#                 l2_reg_embedding=NNconfig_dic["l2_reg_embedding"],
-#                 l2_reg_linear=NNconfig_dic["l2_reg_linear"],
-#                 l2_reg_cin=NNconfig_dic["l2_reg_cin"],
-#                 dnn_use_bn=NNconfig_dic["dnn_use_bn"],
-#                 dnn_activation=NNconfig_dic["dnn_activation"],
-#                 dnn_dropout=NNconfig_dic["dnn_dropout"])
-# NNconfig_dic["model_name"] = "xDeepFM"
-
-# model = AutoInt(linear_feature_columns, dnn_feature_columns,
-#                 dnn_hidden_units=NNconfig_dic["dnn_hidden_units"], 
-#                 l2_reg_dnn=NNconfig_dic["l2_reg_dnn"],
-#                 l2_reg_embedding=NNconfig_dic["l2_reg_embedding"],
-#                 l2_reg_linear=NNconfig_dic["l2_reg_linear"],
-#                 dnn_use_bn=NNconfig_dic["dnn_use_bn"],
-#                 dnn_activation=NNconfig_dic["dnn_activation"],
-#                 dnn_dropout=NNconfig_dic["dnn_dropout"],
-#                 att_layer_num=NNconfig_dic["att_layer_num"],
-#                 att_embedding_size=NNconfig_dic["att_embedding_size"],
-#                 att_head_num=NNconfig_dic["att_head_num"],
-#                )
-# NNconfig_dic["model_name"] = "AutoInt"
 
 
 # %%

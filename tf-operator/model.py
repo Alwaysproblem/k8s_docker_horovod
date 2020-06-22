@@ -10,23 +10,23 @@ import numpy as np
 import tensorflow as tf
 from deepctr.inputs import SparseFeat, VarLenSparseFeat, get_feature_names
 from deepctr.models import DeepFM
-import platform
+# import platform
 
 #%%
 
-host = platform.node()
-host_index = {
-    "n-adx-recall-2": 0,
-    "n-adx-recall-3": 1,
-    "n-adx-recall-4": 2,
-}
+# host = platform.node()
+# host_index = {
+#     "n-adx-recall-2": 0,
+#     "n-adx-recall-3": 1,
+#     "n-adx-recall-4": 2,
+# }
 
-os.environ['TF_CONFIG'] = json.dumps({
-    'cluster': {
-        'worker': ["172.17.67.60:22222", "172.17.67.59:22222", "172.17.67.61:22222"]
-    },
-    'task': {'type': 'worker', 'index': host_index[host]}
-})
+# os.environ['TF_CONFIG'] = json.dumps({
+#     'cluster': {
+#         'worker': ["172.17.67.60:22222", "172.17.67.59:22222", "172.17.67.61:22222"]
+#     },
+#     'task': {'type': 'worker', 'index': host_index[host]}
+# })
 
 #%%
 strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy()
@@ -246,8 +246,6 @@ callbacks = [tf.keras.callbacks.TensorBoard(log_dir=log_dir, histogram_freq=1, p
 
 
 # %%
-
-# TODO: edit epoch etc.
 model.fit(D_train, epochs=epochs, verbose=1 if worker_index == 0 else 0, validation_data=D_valid,
                     steps_per_epoch=max(len_train // batchsize + 1, num_workers) // num_workers , 
                     validation_steps=max(len_valid // batchsize + 1, num_workers) // num_workers,
