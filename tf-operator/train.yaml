@@ -12,7 +12,7 @@ spec:
         spec:
           containers:
             - name: tensorflow
-              image: kubeflow/multi_worker_strategy:v1.0
+              image: tf2-mwms:k8s
               volumeMounts:
               - mountPath: /data
                 name: dataset
